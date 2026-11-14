@@ -8,7 +8,7 @@ pipeline {
                 echo 'Building application...'
 
                 withEnv(["PATH=/opt/maven/bin:${env.PATH}"]) {
-                    sh 'mvn clean deploy'
+                    sh 'mvn clean package'
                 }
 
                 echo '---build completed---'
