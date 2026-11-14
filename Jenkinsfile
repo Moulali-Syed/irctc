@@ -1,31 +1,28 @@
 pipeline {
     agent any
 
-
-    environment {
-    	"PATH+MAVEN" = '/opt/maven/bin'
-    }
-
     stages {
 
         stage('Build') {
             steps {
                 echo 'Building application...'
-                sh 'mvn clean deploy'
-		echo '---build completeed---'
+
+                withEnv(["PATH=/opt/maven/bin:${env.PATH}"]) {
+                    sh 'mvn clean deploy'
+                }
+
+                echo '---build completed---'
             }
         }
 
         stage('SonarQube Analysis') {
-           environment {
-		scannerHome = tool 'sonar-qube-scanner'
-	   } 
-	   steps {
-                
-                   withSonarQubeEnv("apple-sonarqube-server") {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                
+            environment {
+                scannerHome = tool 'sonar-qube-scanner'
+            }
+            steps {
+                withSonarQubeEnv('apple-sonarqube-server') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
             }
         }
     }
