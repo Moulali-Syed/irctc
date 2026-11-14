@@ -3,7 +3,7 @@ pipeline {
 
 
     environment {
-    	PATH = '/opt/maven/bin:$PATH'
+    	PATH+MAVEN = '/opt/maven/bin'
     }
 
     stages {
@@ -23,7 +23,7 @@ pipeline {
 	   steps {
                 
                    withSonarQubeEnv("apple-sonarqube-server") {
-                        sh "${ScannerHome}/bin/sonar-scanner"
+                        sh "${scannerHome}/bin/sonar-scanner"
                     }
                 
             }
