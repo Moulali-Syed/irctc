@@ -3,7 +3,7 @@ pipeline {
 
 
     environment {
-    	PATH+MAVEN = '/opt/maven/bin'
+    	"PATH+MAVEN" = '/opt/maven/bin'
     }
 
     stages {
